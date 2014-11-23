@@ -1,4 +1,4 @@
-package database
+package middlewares
 
 import (
 	"github.com/codegangsta/negroni"

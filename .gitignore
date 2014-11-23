@@ -1,2 +1,5 @@
 *.exe
 .env
+
+gin-bin
+index-backend

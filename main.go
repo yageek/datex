@@ -2,24 +2,22 @@ package main
 
 import (
 	"github.com/codegangsta/negroni"
-	"github.com/go-gis/index-backend/database"
+	"github.com/go-gis/index-backend/handlers/ellipses"
+	. "github.com/go-gis/index-backend/middlewares"
 	"github.com/gorilla/mux"
-	"github.com/unrolled/render"
 	"os"
 )
-
-var urender *render.Render
-
-func init() {
-	urender = render.New(render.Options{})
-}
 
 func main() {
 
 	n := negroni.Classic()
-	n.Use(database.MongoMiddleware())
 
+	n.Use(MongoMiddleware())
+	n.Use(negroni.HandlerFunc(CheckPostRequest))
 	router := mux.NewRouter()
+
+	router.HandleFunc("/ellipse/all", ellipses.AllEllipse).Methods("GET")
+	router.HandleFunc("/ellipse/create", ellipses.CreateEllipse).Methods("POST")
 
 	n.UseHandler(router)
 
