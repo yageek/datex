@@ -14,6 +14,7 @@ func main() {
 
 	n.Use(MongoMiddleware())
 	n.Use(negroni.HandlerFunc(CheckPostRequest))
+	n.Use(NewAuthChecker())
 	router := mux.NewRouter()
 
 	router.HandleFunc("/ellipse/all", ellipses.AllEllipse).Methods("GET")
