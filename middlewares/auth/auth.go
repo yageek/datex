@@ -4,6 +4,7 @@ import (
 	"code.google.com/p/go-uuid/uuid"
 	"crypto/hmac"
 	"crypto/sha256"
+	"fmt"
 	"github.com/go-gis/index-backend/middlewares/mongo"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
@@ -98,8 +99,8 @@ func signature(r *http.Request, user *ApiUser) []byte {
 
 	args := []string{r.Method, r.Host, r.URL.Path}
 
-	for _, arg := range r.URL.Query() {
-		args = append(args, arg[0])
+	for key, arg := range r.URL.Query() {
+		args = append(args, fmt.Sprintf("%s=%s", key, arg[0]))
 	}
 
 	sort.Strings(args)
