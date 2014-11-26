@@ -1,4 +1,4 @@
-package ellipses
+package ellipsoid
 
 import (
 	"encoding/json"
@@ -10,9 +10,9 @@ import (
 	"net/http"
 )
 
-const EllipseCollectionName = "ellipses"
+const EllipsoidCollectionName = "ellipses"
 
-type Ellipse struct {
+type Ellipsoid struct {
 	Description   string  `json:"description" bson:"description"`
 	SemiMajorAxis float64 `json:"a"  bson:"major-axis"`
 	Flattening    float64 `json:"f"  bson:"flattening"`
@@ -20,13 +20,13 @@ type Ellipse struct {
 }
 
 func collection(r *http.Request) *mgo.Collection {
-	return mongo.GetDb(r).C(EllipseCollectionName)
+	return mongo.GetDb(r).C(EllipsoidCollectionName)
 }
 
-func AllEllipse(w http.ResponseWriter, r *http.Request) {
+func AllEllipsoid(w http.ResponseWriter, r *http.Request) {
 	c := collection(r)
 
-	var results []Ellipse
+	var results []Ellipsoid
 	err := c.Find(bson.M{}).All(&results)
 
 	if err != nil {
@@ -41,9 +41,9 @@ func AllEllipse(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func CreateEllipse(w http.ResponseWriter, r *http.Request) {
+func CreateEllipsoid(w http.ResponseWriter, r *http.Request) {
 
-	e := Ellipse{}
+	e := Ellipsoid{}
 	data := GetData(r)
 
 	err := json.Unmarshal(data, &e)
