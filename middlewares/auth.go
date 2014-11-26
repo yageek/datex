@@ -10,6 +10,7 @@ import (
 	"net/http"
 	"sort"
 	"strings"
+	"time"
 )
 
 const (
@@ -17,6 +18,7 @@ const (
 	PublicKeyKey      = "public_key"
 	TimestampKey      = "timestamp"
 	SignatureKey      = "signature"
+	maxSecondDelta    = 10
 )
 
 type ApiUser struct {
@@ -61,6 +63,18 @@ func (a *AccessTokenChecker) ServeHTTP(w http.ResponseWriter, req *http.Request,
 	sentSignature := v.Get(SignatureKey)
 	user := userFromPublicKey(req, clientPublicKey)
 
+	now := time.Now().UTC()
+	reqTime, err := time.Parse("20060102150405", timestamp)
+
+	if err != nil {
+		http.Error(w, "Invalid timestamp", http.StatusBadRequest)
+		return
+	}
+
+	if now.Sub(reqTime).Seconds() > maxSecondDelta {
+		http.Error(w, "Too old request", http.StatusUnauthorized)
+		return
+	}
 	if clientPublicKey == "" || timestamp == "" || sentSignature == "" || user == nil {
 		http.Error(w, "Unauthorized", http.StatusUnauthorized)
 		return
