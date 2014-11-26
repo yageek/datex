@@ -1,9 +1,10 @@
-package middlewares
+package auth
 
 import (
 	"code.google.com/p/go-uuid/uuid"
 	"crypto/hmac"
 	"crypto/sha256"
+	"github.com/go-gis/index-backend/middlewares/mongo"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 	"log"
@@ -110,7 +111,7 @@ func signature(r *http.Request, user *ApiUser) []byte {
 }
 
 func collection(r *http.Request) *mgo.Collection {
-	return GetDb(r).C(ApiKeysCollection)
+	return mongo.GetDb(r).C(ApiKeysCollection)
 }
 func userFromPublicKey(r *http.Request, publicKey string) *ApiUser {
 

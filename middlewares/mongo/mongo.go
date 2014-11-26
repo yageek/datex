@@ -1,4 +1,4 @@
-package middlewares
+package mongo
 
 import (
 	"github.com/codegangsta/negroni"

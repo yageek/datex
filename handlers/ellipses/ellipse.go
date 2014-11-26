@@ -3,6 +3,7 @@ package ellipses
 import (
 	"encoding/json"
 	. "github.com/go-gis/index-backend/middlewares"
+	"github.com/go-gis/index-backend/middlewares/mongo"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 	"log"
@@ -19,7 +20,7 @@ type Ellipse struct {
 }
 
 func collection(r *http.Request) *mgo.Collection {
-	return GetDb(r).C(EllipseCollectionName)
+	return mongo.GetDb(r).C(EllipseCollectionName)
 }
 
 func AllEllipse(w http.ResponseWriter, r *http.Request) {
