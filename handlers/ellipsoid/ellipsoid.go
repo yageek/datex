@@ -10,7 +10,7 @@ import (
 	"net/http"
 )
 
-const EllipsoidCollectionName = "ellipses"
+const EllipsoidCollectionName = "ellipsoids"
 
 type Ellipsoid struct {
 	Description   string  `json:"description" bson:"description"`
