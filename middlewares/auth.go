@@ -2,17 +2,21 @@ package middlewares
 
 import (
 	"code.google.com/p/go-uuid/uuid"
-	//"github.com/smartystreets/go-aws-auth"
+	"crypto/hmac"
+	"crypto/sha256"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 	"log"
 	"net/http"
-	"net/url"
+	"sort"
+	"strings"
 )
 
 const (
 	ApiKeysCollection = "api_keys"
 	PublicKeyKey      = "public_key"
+	TimestampKey      = "timestamp"
+	SignatureKey      = "signature"
 )
 
 type ApiUser struct {
@@ -45,34 +49,61 @@ func NewAccessTokenChecker() *AccessTokenChecker {
 type AccessTokenChecker struct {
 }
 
-func (a *AccessTokenChecker) ServeHTTP(w http.ResponseWriter, r *http.Request, next http.Handler) {
-	var v url.Values
+func (a *AccessTokenChecker) ServeHTTP(w http.ResponseWriter, req *http.Request, next http.Handler) {
 
-	if r.Method == "GET" {
-		v = r.URL.Query()
-	} else {
-		r.ParseForm()
-		v = r.PostForm
-	}
+	r := &http.Request{}
+	*r = *req
+
+	v := r.URL.Query()
 
 	clientPublicKey := v.Get(PublicKeyKey)
+	timestamp := v.Get(TimestampKey)
+	sentSignature := v.Get(SignatureKey)
+	user := userFromPublicKey(req, clientPublicKey)
 
-	if clientPublicKey == "" {
-		http.Error(w, "Unauthorize - No public key provided", http.StatusUnauthorized)
-		log.Println("No public key provided")
+	if clientPublicKey == "" || timestamp == "" || sentSignature == "" || user == nil {
+		http.Error(w, "Unauthorized", http.StatusUnauthorized)
 		return
 	}
 
-	user := userFromPublicKey(r, clientPublicKey)
-	log.Println("Public key:", user.PublicKey)
+	v.Del(SignatureKey)
+	r.URL.RawQuery = v.Encode()
 
-	//Check signature
-	next.ServeHTTP(w, r)
+	expected_signature := signature(r, user)
+	if ok := hmac.Equal(expected_signature, []byte(sentSignature)); ok {
+		//Check signature
+		next.ServeHTTP(w, req)
+	} else {
+		http.Error(w, "Unauthorized - Wrong credentials", http.StatusUnauthorized)
+	}
+
 }
+
+func signature(r *http.Request, user *ApiUser) []byte {
+
+	args := []string{r.Method, r.Host, r.URL.Path}
+
+	for _, arg := range r.URL.Query() {
+		args = append(args, arg[0])
+	}
+
+	sort.Strings(args)
+
+	data := []byte(strings.Join(args, "_"))
+	mac := hmac.New(sha256.New, []byte(user.PrivateKey))
+	mac.Write(data)
+	return mac.Sum(nil)
+}
+
 func collection(r *http.Request) *mgo.Collection {
 	return GetDb(r).C(ApiKeysCollection)
 }
 func userFromPublicKey(r *http.Request, publicKey string) *ApiUser {
+
+	if publicKey == "" {
+		return nil
+	}
+
 	c := collection(r)
 	u := ApiUser{}
 
