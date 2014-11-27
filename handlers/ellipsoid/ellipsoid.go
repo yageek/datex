@@ -18,6 +18,7 @@ type Ellipsoid struct {
 	SemiMajorAxis float64 `json:"a"  bson:"semi-major-axis"`
 	Deprecated    bool    `json:"deprecated" bson:"deprecated"`
 
+	EPSG              int     `json:"epsg,omitempty" bson:"epsg,omitempty"`
 	Description       string  `json:"description,omitempty" bson:"description,omitempty"`
 	Source            string  `json:"source,omitempty" bson:"source,omitempty"`
 	SemiMinorAxis     float64 `json:"b,omitempty" bson:"semi-minor-axis,omitempty"`
