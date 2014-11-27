@@ -1,3 +1,4 @@
+//Middleware handling mgo sessions
 package mongo
 
 import (

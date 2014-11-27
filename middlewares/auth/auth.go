@@ -1,3 +1,4 @@
+//Middleware handling the API authentication
 package auth
 
 import (

@@ -1,3 +1,4 @@
+//Manages handlers targeting ellipsoids
 package ellipsoid
 
 import (
@@ -27,6 +28,7 @@ func collection(r *http.Request) *mgo.Collection {
 	return mongo.GetDb(r).C(EllipsoidCollectionName)
 }
 
+// Returns all the ellipsoids presents in the database
 func AllEllipsoid(w http.ResponseWriter, r *http.Request) {
 	c := collection(r)
 
@@ -45,6 +47,10 @@ func AllEllipsoid(w http.ResponseWriter, r *http.Request) {
 
 }
 
+// Create an ellipsoid with the JSON provided in the request.
+// The JSON should provide least have a name, a semi-major-axis, a semi-minor-axis
+// or the inverse flattening. If the deprecated value is not provided, it is considered
+// as false.
 func CreateEllipsoid(w http.ResponseWriter, r *http.Request) {
 
 	e := Ellipsoid{}
