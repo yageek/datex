@@ -13,10 +13,14 @@ import (
 const EllipsoidCollectionName = "ellipsoids"
 
 type Ellipsoid struct {
-	Description   string  `json:"description" bson:"description"`
-	SemiMajorAxis float64 `json:"a"  bson:"major-axis"`
-	Flattening    float64 `json:"f"  bson:"flattening"`
-	Reference     string  `json:"ref" bson:"reference"`
+	Name          string  `json:"name" bson:"name"`
+	SemiMajorAxis float64 `json:"a"  bson:"semi-major-axis"`
+	Deprecated    bool    `json:"deprecated" bson:"deprecated"`
+
+	Description       string  `json:"description,omitempty" bson:"description,omitempty"`
+	Source            string  `json:"source,omitempty" bson:"source,omitempty"`
+	SemiMinorAxis     float64 `json:"b,omitempty" bson:"semi-minor-axis,omitempty"`
+	InverseFlattening float64 `json:"f,omitempty"  bson:"inverse-flattening,omitempty"`
 }
 
 func collection(r *http.Request) *mgo.Collection {
@@ -51,6 +55,13 @@ func CreateEllipsoid(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Printf("Error by decoding JSON:%s\n", err)
 		http.Error(w, "Invalid JSON", http.StatusBadRequest)
+		return
+	}
+
+	if e.Name == "" || e.SemiMinorAxis == 0 || (e.SemiMinorAxis == 0 && e.InverseFlattening == 0) {
+		message := "Ellipsoid name, semi-major-axis, inverse-flattening or semi-minor-axis are mandatory"
+		log.Println(message)
+		http.Error(w, message, http.StatusBadRequest)
 		return
 	}
 
