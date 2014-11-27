@@ -49,3 +49,8 @@ func MongoMiddleware() negroni.HandlerFunc {
 		next(rw, r)
 	})
 }
+
+// Get the mgo collection from request context by its name
+func Collection(r *http.Request, name string) *mgo.Collection {
+	return GetDb(r).C(name)
+}

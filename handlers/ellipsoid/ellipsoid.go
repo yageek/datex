@@ -25,13 +25,9 @@ type Ellipsoid struct {
 	InverseFlattening float64 `json:"f,omitempty"  bson:"inverse-flattening,omitempty"`
 }
 
-func collection(r *http.Request) *mgo.Collection {
-	return mongo.GetDb(r).C(EllipsoidCollectionName)
-}
-
 // Returns all the ellipsoids presents in the database
 func AllEllipsoid(w http.ResponseWriter, r *http.Request) {
-	c := collection(r)
+	c := mongo.Collection(r, EllipsoidCollectionName)
 
 	var results []Ellipsoid
 	err := c.Find(bson.M{}).All(&results)

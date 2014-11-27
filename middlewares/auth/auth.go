@@ -116,16 +116,13 @@ func signature(r *http.Request, user *ApiUser) []byte {
 	return mac.Sum(nil)
 }
 
-func collection(r *http.Request) *mgo.Collection {
-	return mongo.GetDb(r).C(ApiKeysCollection)
-}
 func userFromPublicKey(r *http.Request, publicKey string) *ApiUser {
 
 	if publicKey == "" {
 		return nil
 	}
 
-	c := collection(r)
+	c := mongo.Collection(r, ApiKeysCollection)
 	u := ApiUser{}
 
 	err := c.Find(bson.M{"public_key": publicKey}).One(&u)
