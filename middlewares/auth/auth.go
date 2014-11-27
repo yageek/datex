@@ -30,31 +30,32 @@ type ApiUser struct {
 	PrivateKey string `bson:"private_key"`
 }
 
-var chk *AccessTokenChecker
+var chk *accessTokenChecker
 
 func init() {
-	chk = NewAccessTokenChecker()
+	chk = newaccessTokenChecker()
 }
 
+// Wrap a http.HandlerFunc to secure it
 func SecureHandleFunc(handler http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		chk.ServeHTTP(w, r, handler)
 	}
 }
 
-func NewApiUser(name string) *ApiUser {
+func newApiUser(name string) *ApiUser {
 
 	return &ApiUser{Name: name, PublicKey: uuid.New(), PrivateKey: uuid.New()}
 }
 
-func NewAccessTokenChecker() *AccessTokenChecker {
-	return &AccessTokenChecker{}
+func newaccessTokenChecker() *accessTokenChecker {
+	return &accessTokenChecker{}
 }
 
-type AccessTokenChecker struct {
+type accessTokenChecker struct {
 }
 
-func (a *AccessTokenChecker) ServeHTTP(w http.ResponseWriter, req *http.Request, next http.Handler) {
+func (a *accessTokenChecker) ServeHTTP(w http.ResponseWriter, req *http.Request, next http.Handler) {
 
 	r := &http.Request{}
 	*r = *req
