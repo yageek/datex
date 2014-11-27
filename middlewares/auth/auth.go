@@ -1,4 +1,7 @@
-//Middleware handling the API authentication
+/*
+The authentication is currently very basic and based on idea proposed
+on http://www.thebuzzmedia.com/designing-a-secure-rest-api-without-oauth-authentication/.
+*/
 package auth
 
 import (

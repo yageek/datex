@@ -17,10 +17,12 @@ const db key = 0
 
 const DatabaseName = "opengis_index"
 
+// Add the mgo database to the request context
 func SetDb(r *http.Request, val *mgo.Database) {
 	context.Set(r, db, val)
 }
 
+// Get the mgo database from the request context
 func GetDb(r *http.Request) *mgo.Database {
 	if rv := context.Get(r, db); rv != nil {
 		return rv.(*mgo.Database)
@@ -28,6 +30,8 @@ func GetDb(r *http.Request) *mgo.Database {
 	return nil
 }
 
+// Returns negroni middleware mapping a mgo database
+// from a cloned mgo session.
 func MongoMiddleware() negroni.HandlerFunc {
 
 	url := os.Getenv("MONGODB_URL")
