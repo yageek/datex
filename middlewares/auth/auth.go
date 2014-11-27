@@ -10,7 +10,6 @@ import (
 	"crypto/sha256"
 	"fmt"
 	"github.com/go-gis/index-backend/middlewares/mongo"
-	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 	"log"
 	"net/http"

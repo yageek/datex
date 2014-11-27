@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	. "github.com/go-gis/index-backend/middlewares"
 	"github.com/go-gis/index-backend/middlewares/mongo"
-	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 	"log"
 	"net/http"
@@ -68,7 +67,7 @@ func CreateEllipsoid(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	c := collection(r)
+	c := mongo.Collection(r, EllipsoidCollectionName)
 
 	err = c.Insert(e)
 
