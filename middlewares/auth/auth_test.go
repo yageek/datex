@@ -8,7 +8,7 @@ import (
 
 func TestSignature(t *testing.T) {
 
-	user := &ApiUser{PrivateKey: "qwerty", PublicKey: "asdf"}
+	user := &ApiUser{PrivateKey: "qwertz", PublicKey: "asdf"}
 
 	req, _ := http.NewRequest("POST", "http://localhost:3000/ellipsoid/create", nil)
 	req.Header.Add("Content-Type", "application/json")

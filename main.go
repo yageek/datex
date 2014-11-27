@@ -19,8 +19,8 @@ func main() {
 
 	router := mux.NewRouter()
 
-	router.HandleFunc("/ellipsoid/all", ellipsoid.AllEllipsoid).Methods("GET")
-	router.HandleFunc("/ellipsoid/create", auth.SecureHandleFunc(ellipsoid.CreateEllipsoid)).Methods("POST")
+	router.HandleFunc("/ellipsoid/all", mongo.All(&ellipsoid.Ellipsoid{})).Methods("GET")
+	router.HandleFunc("/ellipsoid/create", auth.SecureHandleFunc(mongo.Create(&ellipsoid.Ellipsoid{}))).Methods("POST")
 
 	n.UseHandler(router)
 
