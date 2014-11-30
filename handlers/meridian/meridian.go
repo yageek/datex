@@ -12,6 +12,7 @@ type Meridian struct {
 	EPSG              int     `json:"epsg,omitempty" bson:"epsg,omitempty"`
 	Description       string  `json:"description,omitempty" bson:"description,omitempty"`
 	Source            string  `json:"source,omitempty" bson:"source,omitempty"`
+	Deprecated        bool    `json:"deprecated" bson:"deprecated"`
 }
 
 func (m *Meridian) CollectionName() string {

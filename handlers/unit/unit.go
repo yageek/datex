@@ -14,6 +14,7 @@ const (
 type Unit struct {
 	EPSG        int    `json:"epsg" bson:"epsg"`
 	Name        string `json:"name" bson:"name"`
+	Deprecated  bool   `json:"deprecated" bson:"deprecated"`
 	Source      string `json:"source,omitempty" bson:"source,omitempty"`
 	Description string `json:"description,omitempty" bson:"description,omitempty"`
 }
