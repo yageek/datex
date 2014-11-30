@@ -3,8 +3,8 @@ package ellipsoid
 
 import (
 	"encoding/json"
-	. "github.com/go-gis/index-backend/middlewares"
-	"github.com/go-gis/index-backend/middlewares/mongo"
+	. "github.com/go-gis/datex/middlewares"
+	"github.com/go-gis/datex/middlewares/mongo"
 	"gopkg.in/mgo.v2/bson"
 	"log"
 	"net/http"

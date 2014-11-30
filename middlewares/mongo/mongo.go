@@ -4,7 +4,7 @@ package mongo
 import (
 	"encoding/json"
 	"github.com/codegangsta/negroni"
-	"github.com/go-gis/index-backend/middlewares"
+	"github.com/go-gis/datex/middlewares"
 	"github.com/gorilla/context"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"

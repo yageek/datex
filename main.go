@@ -2,11 +2,12 @@ package main
 
 import (
 	"github.com/codegangsta/negroni"
-	"github.com/go-gis/index-backend/handlers/ellipsoid"
-	"github.com/go-gis/index-backend/handlers/unit"
-	"github.com/go-gis/index-backend/middlewares"
-	"github.com/go-gis/index-backend/middlewares/auth"
-	"github.com/go-gis/index-backend/middlewares/mongo"
+	"github.com/go-gis/datex/handlers/ellipsoid"
+	"github.com/go-gis/datex/handlers/meridian"
+	"github.com/go-gis/datex/handlers/unit"
+	"github.com/go-gis/datex/middlewares"
+	"github.com/go-gis/datex/middlewares/auth"
+	"github.com/go-gis/datex/middlewares/mongo"
 	"github.com/gorilla/mux"
 	"os"
 )
