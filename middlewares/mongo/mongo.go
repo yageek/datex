@@ -82,10 +82,15 @@ func All(object interface{}) http.HandlerFunc {
 			return
 		}
 
-		data, _ := json.Marshal(results)
-
 		w.WriteHeader(http.StatusOK)
-		w.Write(data)
+
+		if len(results) == 0 {
+			w.Write([]byte("[]"))
+		} else {
+			data, _ := json.Marshal(results)
+			w.Write(data)
+		}
+
 	}
 
 }
