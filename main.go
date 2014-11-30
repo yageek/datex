@@ -9,13 +9,14 @@ import (
 	"github.com/go-gis/datex/middlewares/auth"
 	"github.com/go-gis/datex/middlewares/mongo"
 	"github.com/gorilla/mux"
+	"github.com/meatballhat/negroni-logrus"
 	"os"
 )
 
 func main() {
 
-	n := negroni.Classic()
-
+	n := negroni.New()
+	n.Use(negronilogrus.NewMiddleware())
 	n.Use(mongo.MongoMiddleware())
 	n.Use(negroni.HandlerFunc(middlewares.CheckPostRequest))
 
