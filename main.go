@@ -27,6 +27,9 @@ func main() {
 	router.HandleFunc("/unit/all", mongo.All(&unit.Unit{})).Methods("GET")
 	router.HandleFunc("/unit/create", auth.SecureHandleFunc(mongo.Create(&unit.Unit{}))).Methods("POST")
 
+	router.HandleFunc("/meridian/all", mongo.All(&meridian.Meridian{})).Methods("GET")
+	router.HandleFunc("/meridian/create", auth.SecureHandleFunc(mongo.Create(&meridian.Meridian{}))).Methods("POST")
+
 	n.UseHandler(router)
 
 	n.Run(":" + os.Getenv("PORT"))
