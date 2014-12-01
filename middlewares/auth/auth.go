@@ -133,3 +133,14 @@ func userFromPublicKey(r *http.Request, publicKey string) *ApiUser {
 
 	return &u
 }
+
+func (user *ApiUser) Sign(req *http.Request) {
+	v := req.URL.Query()
+
+	v.Add(TimestampKey, time.Now().Local().Format("20060102150405"))
+	v.Add(PublicKeyKey, user.PublicKey)
+	req.URL.RawQuery = v.Encode()
+
+	v.Add(SignatureKey, string(signature(req, user)))
+	req.URL.RawQuery = v.Encode()
+}

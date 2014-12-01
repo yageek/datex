@@ -4,7 +4,6 @@ import (
 	"net/http"
 	"strings"
 	"testing"
-	"time"
 )
 
 func TestSignature(t *testing.T) {
@@ -15,14 +14,7 @@ func TestSignature(t *testing.T) {
 	req, _ := http.NewRequest("POST", "http://localhost:3000/ellipsoid/create", strings.NewReader(body))
 	req.Header.Add("Content-Type", "application/json")
 
-	v := req.URL.Query()
-
-	v.Add(TimestampKey, time.Now().Local().Format("20060102150405"))
-	v.Add(PublicKeyKey, user.PublicKey)
-	req.URL.RawQuery = v.Encode()
-
-	v.Add(SignatureKey, string(signature(req, user)))
-	req.URL.RawQuery = v.Encode()
+	user.Sign(req)
 
 	client := &http.Client{}
 	resp, err := client.Do(req)
