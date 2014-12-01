@@ -69,16 +69,18 @@ func All(object interface{}) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 
 		if !ok {
+			log.Println("Could not cast object to indexObject type")
 			http.Error(w, "Internal Error", http.StatusInternalServerError)
 			return
 		}
 		c := Collection(r, indexObject.CollectionName())
 
-		var results []IndexObject
+		var results []interface{}
 		err := c.Find(bson.M{}).All(&results)
 
 		if err != nil {
-			http.Error(w, "Could not retrieve ellipse", http.StatusInternalServerError)
+			log.Println("MONGO error:", err)
+			http.Error(w, "Could not retrieve object", http.StatusInternalServerError)
 			return
 		}
 
