@@ -4,7 +4,7 @@ import (
 	"math"
 )
 
-const MeridianCollectionName = "prime_merdian"
+const MeridianCollectionName = "prime_meridians"
 
 type Meridian struct {
 	Name              string  `json:"name" bson:"name"`

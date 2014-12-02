@@ -3,7 +3,7 @@ package unit
 type UnitType int
 
 const (
-	UnitCollectionName = "ellipsoids"
+	UnitCollectionName = "units"
 
 	Length UnitType = iota
 	Time
