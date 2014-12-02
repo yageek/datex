@@ -12,7 +12,7 @@ type Ellipsoid struct {
 	Description       string  `json:"description,omitempty" bson:"description,omitempty"`
 	Source            string  `json:"source,omitempty" bson:"source,omitempty"`
 	SemiMinorAxis     float64 `json:"b,omitempty" bson:"semi-minor-axis,omitempty"`
-	InverseFlattening float64 `json:"f,omitempty"  bson:"inverse-flattening,omitempty"`
+	InverseFlattening float64 `json:"inv_f,omitempty"  bson:"inverse-flattening,omitempty"`
 }
 
 func (e *Ellipsoid) CollectionName() string {
