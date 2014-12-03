@@ -8,36 +8,18 @@ type UnitType int
 
 const (
 	UnitCollectionName = "units"
-
-	Length UnitType = iota
-	Time
-	Scale
-	Angle
 )
 
-func (t UnitType) String() string {
-	switch t {
-	case Time:
-		return "time"
-	case Length:
-		return "length"
-	case Scale:
-		return "scale"
-	case Angle:
-		return "angle"
-	default:
-		return "unknown"
-	}
-}
-
 type Unit struct {
-	EPSG         int       `json:"epsg" bson:"epsg"`
 	Name         string    `json:"name" bson:"name"`
+	EPSG         int       `json:"epsg" bson:"epsg"`
+	RevisionDate time.Time `json:"revision_date,omitempty" bson:"type,omitempty"`
 	Deprecated   bool      `json:"deprecated" bson:"deprecated"`
 	Source       string    `json:"source,omitempty" bson:"source,omitempty"`
 	Description  string    `json:"description,omitempty" bson:"description,omitempty"`
-	Type         UnitType  `json:"type" bson:"type"`
-	RevisionDate time.Time `json:"revision_date,omitempty" bson:"type,omitempty"`
+	Type         string    `json:"unit_type" bson:"unit_type"`
+	FactorB      float64   `json:"factor_b" bson:"factor_b"`
+	FactorC      float64   `json:"factor_c" bson:"factor_c"`
 }
 
 func (u *Unit) CollectionName() string {
@@ -45,8 +27,8 @@ func (u *Unit) CollectionName() string {
 }
 
 func (u *Unit) ValidCreation() (bool, string) {
-	if u.EPSG == 0 || u.Name == "" {
-		return false, "EPSG and Name is mandatory"
+	if u.EPSG == 0 || u.Name == "" || u.FactorB == 0 || u.FactorC == 0 {
+		return false, "EPSG, Name, B and C Factor are mandatory"
 	} else {
 		return true, ""
 	}

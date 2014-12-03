@@ -2,17 +2,19 @@ package meridian
 
 import (
 	"math"
+	"time"
 )
 
 const MeridianCollectionName = "prime_meridians"
 
 type Meridian struct {
-	Name              string  `json:"name" bson:"name"`
-	GrenwichLongitude float64 `json:"greenwich_longitude" bson:"greenwich_longitude"`
-	EPSG              int     `json:"epsg,omitempty" bson:"epsg,omitempty"`
-	Description       string  `json:"description,omitempty" bson:"description,omitempty"`
-	Source            string  `json:"source,omitempty" bson:"source,omitempty"`
-	Deprecated        bool    `json:"deprecated" bson:"deprecated"`
+	Name              string    `json:"name" bson:"name"`
+	EPSG              int       `json:"epsg" bson:"epsg"`
+	RevisionDate      time.Time `json:"revision_date,omitempty" bson:"type,omitempty"`
+	Deprecated        bool      `json:"deprecated" bson:"deprecated"`
+	Source            string    `json:"source,omitempty" bson:"source,omitempty"`
+	Description       string    `json:"description,omitempty" bson:"description,omitempty"`
+	GrenwichLongitude float64   `json:"greenwich_longitude" bson:"greenwich_longitude"`
 }
 
 func (m *Meridian) CollectionName() string {
