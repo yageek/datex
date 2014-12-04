@@ -64,15 +64,10 @@ func Collection(r *http.Request, name string) *mgo.Collection {
 	return GetDb(r).C(name)
 }
 
-func All(object interface{}) http.HandlerFunc {
-	indexObject, ok := object.(IndexObject)
+func All(indexObject IndexObject) http.HandlerFunc {
+
 	return func(w http.ResponseWriter, r *http.Request) {
 
-		if !ok {
-			log.Println("Could not cast object to indexObject type")
-			http.Error(w, "Internal Error", http.StatusInternalServerError)
-			return
-		}
 		c := Collection(r, indexObject.CollectionName())
 
 		var results []interface{}
@@ -94,18 +89,11 @@ func All(object interface{}) http.HandlerFunc {
 		}
 
 	}
-
 }
 
-func Create(object interface{}) http.HandlerFunc {
+func Create(indexObject IndexObject) http.HandlerFunc {
 
-	indexObject, ok := object.(IndexObject)
 	return func(w http.ResponseWriter, r *http.Request) {
-		if !ok {
-			http.Error(w, "Internal Error", http.StatusInternalServerError)
-			log.Println("Does not implement IndexObject")
-			return
-		}
 
 		data := middlewares.GetData(r)
 
@@ -135,7 +123,5 @@ func Create(object interface{}) http.HandlerFunc {
 		}
 
 		w.WriteHeader(http.StatusOK)
-
 	}
-
 }
