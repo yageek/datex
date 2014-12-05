@@ -24,7 +24,7 @@ func (e *Ellipsoid) CollectionName() string {
 }
 
 func (e *Ellipsoid) ValidCreation() (bool, string) {
-	if e.Name == "" || e.SemiMinorAxis <= 0 || (e.SemiMinorAxis <= 0 && e.InverseFlattening <= 0) {
+	if e.Name == "" || e.SemiMajorAxis <= 0 || (e.SemiMinorAxis <= 0 && e.InverseFlattening <= 0) {
 		return false, "Ellipsoid name, semi-major-axis, inverse-flattening or semi-minor-axis are mandatory"
 	}
 
