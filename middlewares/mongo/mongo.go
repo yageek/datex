@@ -120,6 +120,7 @@ func Create(indexObject IndexObject) http.HandlerFunc {
 		if err != nil {
 			log.Printf("Error by inserting data: %s\n", err)
 			http.Error(w, "DB error :(", http.StatusInternalServerError)
+			return
 		}
 
 		w.WriteHeader(http.StatusOK)
