@@ -11,6 +11,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"reflect"
 )
 
 var mongoSession *mgo.Session
@@ -91,9 +92,12 @@ func All(indexObject IndexObject) http.HandlerFunc {
 	}
 }
 
-func Create(indexObject IndexObject) http.HandlerFunc {
+func Create(i IndexObject) http.HandlerFunc {
 
 	return func(w http.ResponseWriter, r *http.Request) {
+
+		t := reflect.TypeOf(i).Elem()
+		indexObject := reflect.New(t).Interface().(IndexObject)
 
 		data := middlewares.GetData(r)
 
