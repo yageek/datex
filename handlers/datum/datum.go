@@ -24,6 +24,7 @@ type Datum struct {
 	Epoch         int                  `json:"epoch,omitempty" bson:"epoch,omitempty"`
 	Description   string               `json:"description,omitempty" bson:"description,omitempty"`
 	Source        string               `json:"source,omitempty" bson:"source,omitempty"`
+	RevisionDate  time.Time            `json:"revision_date,omitempty" bson:"revision_date,omitempty"`
 }
 
 func (d *Datum) CollectionName() string {
