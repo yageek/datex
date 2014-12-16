@@ -10,7 +10,7 @@ const MeridianCollectionName = "prime_meridians"
 type Meridian struct {
 	Name              string    `json:"name" bson:"name"`
 	EPSG              int       `json:"epsg" bson:"epsg"`
-	RevisionDate      time.Time `json:"revision_date,omitempty" bson:"type,omitempty"`
+	RevisionDate      time.Time `json:"revision_date,omitempty" bson:"revision_date,omitempty"`
 	Deprecated        bool      `json:"deprecated" bson:"deprecated"`
 	Source            string    `json:"source,omitempty" bson:"source,omitempty"`
 	Description       string    `json:"description,omitempty" bson:"description,omitempty"`
