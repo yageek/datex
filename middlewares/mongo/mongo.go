@@ -4,8 +4,8 @@ package mongo
 import (
 	"encoding/json"
 	"github.com/codegangsta/negroni"
-	"github.com/go-gis/datex/middlewares"
 	"github.com/gorilla/context"
+	"github.com/yageek/datex/middlewares"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 	"log"

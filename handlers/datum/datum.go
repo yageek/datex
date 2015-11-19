@@ -1,8 +1,8 @@
 package datum
 
 import (
-	"github.com/go-gis/datex/handlers/ellipsoid"
-	"github.com/go-gis/datex/handlers/meridian"
+	"github.com/yageek/datex/handlers/ellipsoid"
+	"github.com/yageek/datex/handlers/meridian"
 )
 
 type DatumType int

@@ -22,7 +22,7 @@ func (m *Meridian) CollectionName() string {
 }
 
 func (m *Meridian) ValidCreation() (bool, string) {
-	if m.Name == "" || m.GrenwichLongitude == math.NaN() {
+	if m.Name == "" || m.GreenwichLongitude == math.NaN() {
 		return false, "Name and Greenwich Longitude are mandatory"
 	}
 

@@ -2,14 +2,14 @@ package main
 
 import (
 	"github.com/codegangsta/negroni"
-	"github.com/go-gis/datex/handlers/ellipsoid"
-	"github.com/go-gis/datex/handlers/meridian"
-	"github.com/go-gis/datex/handlers/unit"
-	"github.com/go-gis/datex/middlewares"
-	"github.com/go-gis/datex/middlewares/auth"
-	"github.com/go-gis/datex/middlewares/mongo"
 	"github.com/gorilla/mux"
 	"github.com/meatballhat/negroni-logrus"
+	"github.com/yageek/datex/handlers/ellipsoid"
+	"github.com/yageek/datex/handlers/meridian"
+	"github.com/yageek/datex/handlers/unit"
+	"github.com/yageek/datex/middlewares"
+	"github.com/yageek/datex/middlewares/auth"
+	"github.com/yageek/datex/middlewares/mongo"
 	"os"
 )
 

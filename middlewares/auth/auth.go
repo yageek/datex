@@ -9,7 +9,7 @@ import (
 	"crypto/hmac"
 	"crypto/sha256"
 	"fmt"
-	"github.com/go-gis/datex/middlewares/mongo"
+	"github.com/yageek/datex/middlewares/mongo"
 	"gopkg.in/mgo.v2/bson"
 	"log"
 	"net/http"
